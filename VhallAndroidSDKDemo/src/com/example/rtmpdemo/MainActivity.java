@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 	 * 初始化显示和参数
 	 */
 	private void initData(){
-		Constants.sdk_type = Constants.TYPE_STREAM;
+		Constants.sdk_type = Constants.TYPE_SELF;
 		if(Constants.sdk_type == Constants.TYPE_SELF){
 			tv_roomid.setText("活动id");
 			ll_password.setVisibility(View.VISIBLE);
