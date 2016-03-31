@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VhallSDKDemo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_broadcast">BroadcastActivity</string>
+    <string name="title_activity_watch">WatchActivity</string>
+    <string name="title_activity_broadcast_land">BroadcastLandActivity</string>
+    <string name="title_activity_watch_land">WatchLandActivity</string>
+    
+    <string name="vhall_copyright">Copyright (c) 2015 北京微吼时代科技有限公司. All rights reserved.</string>
+
+</resources>
