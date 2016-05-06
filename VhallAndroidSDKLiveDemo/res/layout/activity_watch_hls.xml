@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/vedio_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <SurfaceView
+            android:id="@+id/surface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+        </SurfaceView>
+        
+        <TextView 
+            android:id="@+id/audio_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="语音直播中"
+            android:textSize="14sp"
+            android:textColor="#0000cd"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <include 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_bottom"/>
+
+</LinearLayout>
