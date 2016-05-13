@@ -1,5 +1,7 @@
 package com.vhall.live;
 
+import java.util.Random;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,11 +43,14 @@ public class MainActivity extends Activity {
     int delay = 2;
     TextView tv_param;
     private ProgressDialog mProcessDialog;
-
+    private EditText mediaFrameRate;
+    private int randomIndex ;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        randam();
         et_roomid = (EditText) this.findViewById(R.id.et_roomid);
         tv_roomid = (TextView) this.findViewById(R.id.tv_roomid);
         et_token = (EditText) this.findViewById(R.id.et_token);
@@ -53,6 +58,7 @@ public class MainActivity extends Activity {
         et_delay = (EditText) this.findViewById(R.id.et_delay);
         et_password = (EditText) this.findViewById(R.id.et_password);
         ll_password = (LinearLayout) this.findViewById(R.id.ll_password);
+        mediaFrameRate = (EditText) this.findViewById(R.id.et_frame_rate);
         rg_type = (RadioGroup) this.findViewById(R.id.rg_type);
         tv_param = (TextView) this.findViewById(R.id.tv_param);
         mProcessDialog = new ProgressDialog(MainActivity.this);
@@ -97,7 +103,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean invalidate(int level, String id, String token,
-            String bitrate, int delay) {
+            String bitrate, int delay , String mediaFrameRate) {
 
         if (TextUtils.isEmpty(id)) {
             Toast.makeText(this, "id不能为空", Toast.LENGTH_SHORT).show();
@@ -109,6 +115,12 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "码率不能为空", Toast.LENGTH_SHORT).show();
                 return false;
             }
+            
+            if (TextUtils.isEmpty(mediaFrameRate)){
+				Toast.makeText(this, "帧率不能为空", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+            
             if (delay < 2) {
                 Toast.makeText(getApplicationContext(), "延时最低2秒",
                         Toast.LENGTH_LONG).show();
@@ -128,12 +140,16 @@ public class MainActivity extends Activity {
         String token = et_token.getText().toString();
         String bitrateStr = et_bitrate.getText().toString();
         String delayStr = et_delay.getText().toString();
+      //帧率
+      	String mediaFrameRateStr = mediaFrameRate.getText().toString();
         try {
             int delay = Integer.parseInt(delayStr);
             int bitrate = Integer.parseInt(bitrateStr);
             bitrate = bitrate * 1024;
-            if (!invalidate(1, id, token, bitrateStr, delay))
+            if (!invalidate(1, id, token, bitrateStr, delay , mediaFrameRateStr))
                 return;
+            int framerate = Integer.parseInt(mediaFrameRateStr);
+			param.setFrame_rate(framerate);
             param.orientation = LiveParam.Screen_orientation_portrait;
             param.video_bitrate = bitrate;
             param.buffer_time = delay;
@@ -148,7 +164,6 @@ public class MainActivity extends Activity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
- 
     }
 
     public void onBroadcastLand(View v) {
@@ -156,11 +171,15 @@ public class MainActivity extends Activity {
         String token = et_token.getText().toString();
         String bitrateStr = et_bitrate.getText().toString();
         String delayStr = et_delay.getText().toString();
+      //帧率
+      	String mediaFrameRateStr = mediaFrameRate.getText().toString();
         try {
             int delay = Integer.parseInt(delayStr);
             int bitrate = Integer.parseInt(bitrateStr);
-            if (!invalidate(1, id, token, bitrateStr, delay))
+            if (!invalidate(1, id, token, bitrateStr, delay , mediaFrameRateStr))
                 return;
+            int framerate = Integer.parseInt(mediaFrameRateStr);
+			param.setFrame_rate(framerate);
             param.orientation = LiveParam.Screen_orientation_landscape;
             param.video_bitrate = bitrate;
             param.buffer_time = delay;
@@ -227,6 +246,13 @@ public class MainActivity extends Activity {
         intent.putExtra("host", host);
         startActivity(intent);
     }
+    
+    public int randam(){
+    	int max=10000;
+    	Random randam = new Random();
+    	randomIndex = randam.nextInt(max);
+    	return randomIndex;
+    }
 
     /**
      * 自动式获取播放地址
@@ -237,11 +263,11 @@ public class MainActivity extends Activity {
         String id = et_roomid.getText().toString();
         String token = et_token.getText().toString();
         String password = et_password.getText().toString();
-        if (!invalidate(0, id, token, null, 0))
+        if (!invalidate(0, id, token, null, 0 , null))
             return;
         mProcessDialog.show();
         ZReqEngine.watch(id, Constants.APP_KEY, Constants.APP_SECRET_KEY,
-                "KoreaHank", "hanguoxin1989@sina.com", password,
+                "user"+ randomIndex,randomIndex+ "@sina.com", password,
                 new ReqCallback() {
 
                     @Override
