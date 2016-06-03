@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="#18181C"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <RadioGroup
+            android:id="@+id/rg_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_doc"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:gravity="center"
+                android:checked="true"
+                android:text="文档"
+                android:textColor="@drawable/tabs_color_selector"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+            <RadioButton
+                android:id="@+id/rb_detail"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:gravity="center"
+                android:text="详情"
+                android:textColor="@drawable/tabs_color_selector"
+                android:textSize="15sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_detail_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_doc_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+    </RelativeLayout>
+
+</LinearLayout>
