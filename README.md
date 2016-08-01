@@ -1,17 +1,19 @@
 vhall_sdk 说明文档
 
 VhallAndroidSDKLiveDemo  自助版SDK2.3.1（Android Studio）
-VhallAndroidSDKLiveDemo_Eclipse  旧版2.2.2（Eclipse）
+VhallAndroidSDKLiveDemo_Eclipse  自助版SDK2.3.1（Eclipse）
 
 自助式网络直播SDK（Android版）
 
-版本：v2.3.1 更新时间：2016.7.25
+版本：v2.3.1 更新时间：2016.8.1
 
 更新内容：
 
 1、多分辨率切换
 
 2、防盗链
+
+3、多种展示方案
 
 自助式网络直播SDK（Android版）
 
