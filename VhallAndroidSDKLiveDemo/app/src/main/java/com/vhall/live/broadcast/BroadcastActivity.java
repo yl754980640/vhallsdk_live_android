@@ -8,9 +8,6 @@ import com.vhall.live.R;
 import com.vhall.live.data.Param;
 import com.vhall.live.utils.ActivityUtils;
 
-/**
- * 主界面
- */
 public class BroadcastActivity extends FragmentActivity {
 
 

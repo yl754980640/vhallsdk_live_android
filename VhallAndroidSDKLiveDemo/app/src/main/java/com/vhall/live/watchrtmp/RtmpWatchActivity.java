@@ -12,26 +12,20 @@ import com.vhall.live.R;
 import com.vhall.live.data.Param;
 import com.vhall.live.utils.ActivityUtils;
 
-/**
- * 观看Rtmp界面
- *
- * @author qing
- */
-public class RtmpWatchActivity extends FragmentActivity implements View.OnClickListener{
+public class RtmpWatchActivity extends FragmentActivity implements View.OnClickListener {
 
     private Button showPPT;
     private LinearLayout linearLayoutShow;
     private FrameLayout act_watch_document;
     private Param param;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.watch_rtmp_activity);
-
         init();
 
-        /** 传参*/
         param = (Param) getIntent().getSerializableExtra("param");
         RtmpWatchFragment rtmpWatchFragment = (RtmpWatchFragment) getSupportFragmentManager().findFragmentById(R.id.act_watch_rtmp);
         if (rtmpWatchFragment == null) {
@@ -59,7 +53,7 @@ public class RtmpWatchActivity extends FragmentActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.act_watch_ppt_show:
                 if (act_watch_document.getVisibility() == View.VISIBLE) {
                     act_watch_document.setVisibility(View.INVISIBLE);

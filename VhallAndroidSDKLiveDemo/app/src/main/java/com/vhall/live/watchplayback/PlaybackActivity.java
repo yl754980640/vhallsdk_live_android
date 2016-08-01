@@ -13,9 +13,6 @@ import com.vhall.live.R;
 import com.vhall.live.data.Param;
 import com.vhall.live.utils.ActivityUtils;
 
-/**
- * Created by huanan on 2016/7/8.
- */
 public class PlaybackActivity extends FragmentActivity implements PlaybackContract.PlaybackView {
 
     FrameLayout contentVideo, contentDoc, contentDetail;
