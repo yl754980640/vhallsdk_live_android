@@ -73,7 +73,7 @@ public class RtmpWatchPresenter implements RtmpWatchContract.Presenter {
 
     @Override
     public int setScaleType() {
-        scaleType = scaleTypes[(++currentPos) % 5];
+        scaleType = scaleTypes[(++currentPos) % scaleTypes.length];
         getWatchRtmp().setScaleType(scaleType);
         watchView.setScaleButtonText(VhallUtil.getFixType(scaleType));
         return scaleType;
