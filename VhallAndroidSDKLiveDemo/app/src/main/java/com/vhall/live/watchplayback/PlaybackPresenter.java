@@ -39,7 +39,7 @@ public class PlaybackPresenter implements PlaybackContract.Presenter {
     private String playerDurationTimeStr = "00:00:00";
 
 
-    private int scaleType = WatchRtmp.CENTER_INSIDE;
+    private int scaleType = WatchRtmp.DEFAULT;
     private int videoWidth = 0;
     private int videoHeight = 0;
 
@@ -177,12 +177,12 @@ public class PlaybackPresenter implements PlaybackContract.Presenter {
         }
     }
 
-    int[] scaleTypeList = new int[]{WatchRtmp.CENTER_INSIDE, WatchRtmp.FIT_X, WatchRtmp.FIT_Y, WatchRtmp.FIT_XY};
+    int[] scaleTypeList = new int[]{WatchRtmp.DEFAULT, WatchRtmp.CENTER_INSIDE, WatchRtmp.FIT_X, WatchRtmp.FIT_Y, WatchRtmp.FIT_XY};
     int currentPos = 0;
 
     @Override
     public int changeScaleType() {
-        scaleType = scaleTypeList[(++currentPos) % 4];
+        scaleType = scaleTypeList[(++currentPos) % scaleTypeList.length];
         setSurfaceFixSize();
         videoView.setScaleTypeText(VhallUtil.getFixType(scaleType));
         return scaleType;
@@ -197,6 +197,12 @@ public class PlaybackPresenter implements PlaybackContract.Presenter {
             playbackView.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             playbackView.setShowDetail(true);
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setSurfaceFixSize();
+            }
+        }, 100);
         return playbackView.getActivity().getRequestedOrientation();
     }
 
@@ -272,6 +278,19 @@ public class PlaybackPresenter implements PlaybackContract.Presenter {
         int fixWidth = 0;
         int fixHeight = 0;
         switch (scaleType) {
+            case WatchRtmp.DEFAULT:
+                int frameWidth = videoView.getContainer().getWidth();
+                int frameHeight = videoView.getContainer().getHeight();
+                float framePercent = frameWidth * 1.0f / frameHeight;
+                float videoPercent = videoWidth * 1.0f / videoHeight;
+                if (framePercent < videoPercent) {//FIT_X
+                    fixWidth = frameWidth;
+                    fixHeight = fixWidth * videoHeight / videoWidth;
+                } else {//FIT_Y
+                    fixHeight = frameHeight;
+                    fixWidth = videoWidth * fixHeight / videoHeight;
+                }
+                break;
             case WatchRtmp.CENTER_INSIDE:
                 fixWidth = videoWidth;
                 fixHeight = videoHeight;
@@ -289,10 +308,11 @@ public class PlaybackPresenter implements PlaybackContract.Presenter {
                 fixHeight = videoView.getContainer().getHeight();
                 break;
         }
+
         Log.e(TAG, "videowidth:" + videoWidth + "videoheight:"
                 + videoHeight + "fixwidth:" + fixWidth + "fixheight:"
                 + fixHeight);
-        if (videoView.getSurfaceView() != null&&fixWidth>0&&fixHeight>0)
+        if (videoView.getSurfaceView() != null && fixWidth > 0 && fixHeight > 0)
             videoView.getSurfaceView().getHolder().setFixedSize(fixWidth, fixHeight);
     }
 }
