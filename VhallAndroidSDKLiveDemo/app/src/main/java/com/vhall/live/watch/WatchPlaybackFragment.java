@@ -1,12 +1,11 @@
-package com.vhall.live.watchplayback;
+package com.vhall.live.watch;
 
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,30 +15,23 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.vhall.live.BasePresenter;
 import com.vhall.live.R;
-import com.vhall.live.utils.VhallUtil;
 
 /**
- * 详情
+ * 观看回放的Fragment
  */
-public class VideoFragment extends Fragment implements PlaybackContract.VideoView {
+public class WatchPlaybackFragment extends Fragment implements WatchContract.PlaybackView {
 
-    private static final String TAG = "VideoFragment";
-
-    PlaybackContract.Presenter mPresenter;
-
-    SurfaceView surface;
-    ProgressBar pb;
+    WatchContract.PlaybackPresenter mPresenter;
+    RelativeLayout rl_video_container;//视频区容器
     ImageView iv_play, iv_fullscreen;
     SeekBar seekbar;
     TextView tv_pos;
-
-    RelativeLayout rl_hlscontainer;
     Button btn_changescaletype;
+    ProgressBar pb;
 
-    public static VideoFragment newInstance() {
-        VideoFragment articleFragment = new VideoFragment();
+    public static WatchPlaybackFragment newInstance() {
+        WatchPlaybackFragment articleFragment = new WatchPlaybackFragment();
         return articleFragment;
     }
 
@@ -51,14 +43,13 @@ public class VideoFragment extends Fragment implements PlaybackContract.VideoVie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.video_fragment, null);
+        return inflater.inflate(R.layout.watch_playback_fragment, null);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        surface = (SurfaceView) getView().findViewById(R.id.surface);
-        rl_hlscontainer = (RelativeLayout) getView().findViewById(R.id.rl_hlscontainer);
+        rl_video_container = (RelativeLayout) getView().findViewById(R.id.rl_video_container);
         btn_changescaletype = (Button) getView().findViewById(R.id.btn_changescaletype);
         pb = (ProgressBar) getView().findViewById(R.id.pb);
         iv_play = (ImageView) getView().findViewById(R.id.iv_play);
@@ -103,13 +94,13 @@ public class VideoFragment extends Fragment implements PlaybackContract.VideoVie
     }
 
     @Override
-    public void setPresenter(PlaybackContract.Presenter presenter) {
+    public void setPresenter(WatchContract.PlaybackPresenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public SurfaceView getSurfaceView() {
-        return surface;
+    public Activity getmActivity() {
+        return getActivity();
     }
 
     @Override
@@ -146,12 +137,22 @@ public class VideoFragment extends Fragment implements PlaybackContract.VideoVie
 
     @Override
     public RelativeLayout getContainer() {
-        return rl_hlscontainer;
+        return rl_video_container;
     }
 
     @Override
     public void setScaleTypeText(String text) {
         btn_changescaletype.setText(text);
+    }
+
+    @Override
+    public int changeScreenOri() {
+        if (getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        return getActivity().getRequestedOrientation();
     }
 
     @Override
@@ -170,5 +171,4 @@ public class VideoFragment extends Fragment implements PlaybackContract.VideoVie
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
 }

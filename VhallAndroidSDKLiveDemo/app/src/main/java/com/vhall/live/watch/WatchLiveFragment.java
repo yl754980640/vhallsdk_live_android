@@ -1,4 +1,4 @@
-package com.vhall.live.watchrtmp;
+package com.vhall.live.watch;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -10,27 +10,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vhall.business.WatchRtmp;
+import com.vhall.business.WatchLive;
 import com.vhall.live.R;
 import com.vhall.live.VhallApplication;
 
+
 import java.util.HashMap;
 
+/**
+ * 观看直播的Fragment
+ */
+public class WatchLiveFragment extends Fragment implements WatchContract.LiveView, View.OnClickListener {
 
-public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.View, View.OnClickListener {
-    public static final String TAG = "RtmpWatchFragment";
+    private WatchContract.LivePresenter mPresenter;
 
-    private RtmpWatchContract.Presenter mPresenter;
-
-    private Button clickRtmpWatch;
-    private Button clickRtmpOrientation;
-    private Button clickRtmpBack;
+    private ImageView clickStart;
+    private ImageView clickOrientation;
     private RadioButton radio_button_sd;
     private RadioButton radio_button_hd;
     private RadioButton radio_button_uhd;
@@ -38,19 +40,18 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
     private TextView fragmentDownloadSpeed;
     private ProgressDialog mProcessDialog;
     private RelativeLayout mContainerLayout;
-
     private Button btn_change_scaletype;
     /***
      * 控制显示Toast
      */
     public static boolean isShowToast = true;
 
-    public static RtmpWatchFragment newInstance() {
-        return new RtmpWatchFragment();
+    public static WatchLiveFragment newInstance() {
+        return new WatchLiveFragment();
     }
 
     @Override
-    public void setPresenter(RtmpWatchContract.Presenter presenter) {
+    public void setPresenter(WatchContract.LivePresenter presenter) {
         mPresenter = presenter;
     }
 
@@ -62,7 +63,7 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.watch_rtmp_fragment, container, false);
+        View root = inflater.inflate(R.layout.watch_live_fragment, container, false);
         initView(root);
         return root;
     }
@@ -75,16 +76,14 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
     @Override
     public void onStop() {
         super.onStop();
-        mPresenter.watchStop();
+        mPresenter.stopWatch();
     }
 
     private void initView(View root) {
-        clickRtmpWatch = (Button) root.findViewById(R.id.click_rtmp_watch);
-        clickRtmpWatch.setOnClickListener(this);
-        clickRtmpOrientation = (Button) root.findViewById(R.id.click_rtmp_orientation);
-        clickRtmpOrientation.setOnClickListener(this);
-        clickRtmpBack = (Button) root.findViewById(R.id.click_rtmp_back);
-        clickRtmpBack.setOnClickListener(this);
+        clickStart = (ImageView) root.findViewById(R.id.click_rtmp_watch);
+        clickStart.setOnClickListener(this);
+        clickOrientation = (ImageView) root.findViewById(R.id.click_rtmp_orientation);
+        clickOrientation.setOnClickListener(this);
         radioChoose = (RadioGroup) root.findViewById(R.id.radio_choose);
         radioChoose.setOnCheckedChangeListener(checkListener);
         radio_button_sd = (RadioButton) root.findViewById(R.id.radio_btn_sd);
@@ -103,7 +102,7 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
     }
 
     @Override
-    public Activity getWatchActivity() {
+    public Activity getmActivity() {
         return this.getActivity();
     }
 
@@ -113,8 +112,12 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
     }
 
     @Override
-    public void setWatchButtonText(String text) {
-        clickRtmpWatch.setText(text);
+    public void setPlayPicture(boolean state) {
+        if (state) {
+            clickStart.setBackgroundResource(R.drawable.pause);
+        } else {
+            clickStart.setBackgroundResource(R.drawable.play);
+        }
     }
 
     @Override
@@ -136,16 +139,15 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.click_rtmp_watch:
-                mPresenter.onWatchBtnClick(WatchRtmp.SWITCH_PIXEL_DEFAULT);
+                mPresenter.onWatchBtnClick();
                 break;
             case R.id.click_rtmp_orientation:
                 mPresenter.changeOriention();
                 break;
-            case R.id.click_rtmp_back:
-                mPresenter.onWatchBack();
-                break;
             case R.id.btn_change_scaletype:
                 mPresenter.setScaleType();
+                break;
+            default:
                 break;
         }
     }
@@ -208,15 +210,23 @@ public class RtmpWatchFragment extends Fragment implements RtmpWatchContract.Vie
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             switch (i) {
                 case R.id.radio_btn_sd:
-                    mPresenter.onSwitchPixel(WatchRtmp.SWITCH_PIXEL_SD);
+                    mPresenter.onSwitchPixel(WatchLive.DPI_SD);
                     break;
                 case R.id.radio_btn_hd:
-                    mPresenter.onSwitchPixel(WatchRtmp.SWITCH_PIXEL_HD);
+                    mPresenter.onSwitchPixel(WatchLive.DPI_HD);
                     break;
                 case R.id.radio_btn_uhd:
-                    mPresenter.onSwitchPixel(WatchRtmp.SWITCH_PIXEL_UHD);
+                    mPresenter.onSwitchPixel(WatchLive.DPI_UHD);
+                    break;
+                default:
                     break;
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestory();
+    }
 }

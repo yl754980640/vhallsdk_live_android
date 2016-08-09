@@ -1,19 +1,17 @@
-package com.vhall.live.watchplayback;
+package com.vhall.live.watch;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.vhall.live.R;
 
 /**
- * 详情
+ * 详情页的Fragment
  */
-public class DetailFragment extends Fragment implements PlaybackContract.DetailView {
-
-    PlaybackContract.Presenter mPresenter;
-
+public class DetailFragment extends Fragment implements WatchContract.DetailView {
     public static DetailFragment newInstance() {
         DetailFragment articleFragment = new DetailFragment();
         return articleFragment;
@@ -36,7 +34,6 @@ public class DetailFragment extends Fragment implements PlaybackContract.DetailV
     }
 
     @Override
-    public void setPresenter(PlaybackContract.Presenter presenter) {
-        mPresenter = presenter;
+    public void setPresenter(WatchContract.Presenter presenter) {
     }
 }

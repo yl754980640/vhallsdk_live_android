@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg"
             android:padding="@dimen/edittext_padding"
-            android:text="@string/vhall_value_romm_id" />
+            android:text="@string/vhall_value_room_id" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg"
             android:padding="@dimen/edittext_padding"
-            android:text="@string/vhall_value_romm_token" />
+            android:text="@string/vhall_value_room_token" />
     </LinearLayout>
 
     <LinearLayout
@@ -184,7 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="竖屏发起RTMP"
+            android:text="竖屏发起"
             android:textSize="12dp" />
 
         <Button
@@ -192,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="横屏发起RTMP"
+            android:text="横屏发起"
             android:textSize="12dp" />
     </RelativeLayout>
 
@@ -208,7 +208,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="观看直播RTMP"
+            android:text="观看直播"
             android:textSize="12dp" />
 
         <Button
@@ -216,7 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="观看回放HLS"
+            android:text="观看回放"
             android:textSize="12dp" />
     </RelativeLayout>
 </LinearLayout>

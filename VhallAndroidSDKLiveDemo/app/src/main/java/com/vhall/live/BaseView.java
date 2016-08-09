@@ -16,8 +16,9 @@
 
 package com.vhall.live;
 
+/**
+ * 基类View
+ */
 public interface BaseView<T> {
-
     void setPresenter(T presenter);
-
 }

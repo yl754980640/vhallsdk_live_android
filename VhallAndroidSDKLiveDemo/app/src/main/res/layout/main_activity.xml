@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/contentFrame"
+        android:id="@+id/mainFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

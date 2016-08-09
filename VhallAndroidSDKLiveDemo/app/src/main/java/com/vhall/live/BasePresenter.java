@@ -16,8 +16,9 @@
 
 package com.vhall.live;
 
+/**
+ * 基类Presenter
+ */
 public interface BasePresenter {
-
     void start();
-
 }
