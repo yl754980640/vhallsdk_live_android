@@ -16,22 +16,20 @@ import android.widget.Toast;
 import com.vhall.live.R;
 import com.vhall.live.broadcast.BroadcastActivity;
 import com.vhall.live.data.Param;
-import com.vhall.live.watchplayback.PlaybackActivity;
-import com.vhall.live.watchrtmp.RtmpWatchActivity;
+import com.vhall.live.watch.WatchActivity;
 
 
-
+/**
+ * 主界面的Fragment
+ */
 public class MainFragment extends Fragment implements MainContract.View, View.OnClickListener {
 
-    public static final String TAG = "MainFragment";
     private MainContract.Presenter mPresenter;
 
     private EditText mId, mToken, mVideoBitrate, mFrameRate, mBufferTime, mK;
-    RadioGroup mType;
-    RadioButton mType_hdpi, mType_xhdpi;
-
+    private RadioGroup mType;
+    private RadioButton mType_hdpi, mType_xhdpi;
     private Button mStartPotrait, mStartLandspace, mWatchRTMP, mWatchHLS;
-
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -142,7 +140,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
     }
 
     @Override
-    public void skipStart(Param param) {
+    public void skipBroadcast(Param param) {
         Intent intent = new Intent(getActivity(), BroadcastActivity.class);
         intent.putExtra("param", param);
         startActivity(intent);
@@ -150,28 +148,21 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
 
     @Override
     public void skipWatch(Param param) {
-        Intent intent = new Intent(getActivity(), RtmpWatchActivity.class);
-        intent.putExtra("param", param);
-        startActivity(intent);
-    }
-
-    @Override
-    public void skipPlayback(Param param) {
-        Intent intent = new Intent(getActivity(), PlaybackActivity.class);
+        Intent intent = new Intent(getActivity(), WatchActivity.class);
         intent.putExtra("param", param);
         startActivity(intent);
     }
 
     @Override
     public void showErrorMsg(String msg) {
-        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_watch_rtmp:
-                mPresenter.startWatch();
+                mPresenter.startWatch(Param.WATCH_LIVE);
                 break;
             case R.id.btn_start_potrait:
                 mPresenter.startBroadcast(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -180,7 +171,9 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                 mPresenter.startBroadcast(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
             case R.id.btn_watch_hls:
-                mPresenter.watchPlayback();
+                mPresenter.startWatch(Param.WATCH_PLAYBACK);
+                break;
+            default:
                 break;
         }
     }

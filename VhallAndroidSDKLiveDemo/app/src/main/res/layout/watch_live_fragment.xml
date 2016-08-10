@@ -10,37 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:orientation="horizontal">
+        android:layout_alignParentLeft="true">
 
 
-        <Button
+        <ImageView
             android:id="@+id/click_rtmp_watch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vhall_button_watch" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/play"/>
 
-        <Button
+        <ImageView
             android:id="@+id/click_rtmp_orientation"
+            android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vhall_button_orientation" />
-
-        <Button
-            android:id="@+id/click_rtmp_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/vhall_button_back" />
+            android:background="@drawable/icon_round_fullscreen"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
 
         <RadioGroup
             android:id="@+id/radio_choose"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <RadioButton
@@ -48,32 +48,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="标清"
-                android:textSize="10dp"
-                android:visibility="gone" />
+                android:textSize="8dp"
+                android:visibility="invisible" />
+
 
             <RadioButton
                 android:id="@+id/radio_btn_hd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="高清"
-                android:textSize="10dp"
-                android:visibility="gone" />
+                android:textSize="8dp"
+                android:visibility="invisible" />
+
 
             <RadioButton
                 android:id="@+id/radio_btn_uhd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="超高清"
-                android:textSize="10dp"
-                android:visibility="gone" />
+                android:textSize="8dp"
+                android:visibility="invisible" />
         </RadioGroup>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btn_change_scaletype"

@@ -13,15 +13,17 @@ import android.widget.Toast;
 import com.vhall.business.VhallCameraView;
 import com.vhall.live.R;
 
+import com.vhall.live.VhallApplication;
 
-
+/**
+ * 发直播的Fragment
+ */
 public class BroadcastFragment extends Fragment implements BroadcastContract.View, View.OnClickListener {
 
-    public static final String TAG = "MainFragment";
     private BroadcastContract.Presenter mPresenter;
-    VhallCameraView cameraview;
-    TextView mSpeed;
-    Button mPublish, mChangeCamera, mChangeFlash, mChangeAudio;
+    private VhallCameraView cameraview;
+    private TextView mSpeed;
+    private Button mPublish, mChangeCamera, mChangeFlash, mChangeAudio;
 
     public static BroadcastFragment newInstance() {
         return new BroadcastFragment();
@@ -70,6 +72,8 @@ public class BroadcastFragment extends Fragment implements BroadcastContract.Vie
             case R.id.btn_changeFlash:
                 mPresenter.changeFlash();
                 break;
+            default:
+                break;
         }
     }
 
@@ -90,7 +94,7 @@ public class BroadcastFragment extends Fragment implements BroadcastContract.Vie
 
     @Override
     public void showErrorMsg(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(VhallApplication.getApp(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

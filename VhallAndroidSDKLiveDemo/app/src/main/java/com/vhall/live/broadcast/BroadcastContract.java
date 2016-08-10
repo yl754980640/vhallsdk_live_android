@@ -6,10 +6,11 @@ import com.vhall.business.VhallCameraView;
 import com.vhall.live.BasePresenter;
 import com.vhall.live.BaseView;
 
+/**
+ * 发直播的View接口类
+ */
 public class BroadcastContract {
-
     interface View extends BaseView<Presenter> {
-
         VhallCameraView getCameraView();
 
         Activity getmActivity();
@@ -19,27 +20,27 @@ public class BroadcastContract {
         void showErrorMsg(String msg);
 
         void setSpeedText(String text);
-
-
     }
 
     interface Presenter extends BasePresenter {
+        void onstartBtnClick();
 
-         void onstartBtnClick();
+        void initBroadcast();
 
-         void startBroadCast();
+        void startBroadcast();
 
-         void stopBroadcast();
+        void stopBroadcast();
 
-         void changeFlash();
+        void finishBroadcast();
 
-         void changeCamera();
+        void changeFlash();
 
-         void changeAudio();
+        void changeCamera();
 
-         void onPause();
+        void changeAudio();
+
+        void onPause();
 
         void onResume();
-
     }
 }

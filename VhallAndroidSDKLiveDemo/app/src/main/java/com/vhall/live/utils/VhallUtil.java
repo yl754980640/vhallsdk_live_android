@@ -1,11 +1,12 @@
 package com.vhall.live.utils;
 
 
-import com.vhall.business.WatchRtmp;
+import com.vhall.business.WatchLive;
 
-
+/**
+ * 常用方法工具类
+ */
 public class VhallUtil {
-
     //1	直播2	预约3	结束4	回放
     public static String getStatusStr(int type) {
         String statusStr = "";
@@ -22,7 +23,6 @@ public class VhallUtil {
             case 4:
                 statusStr = "回放";
                 break;
-
             default:
                 break;
         }
@@ -30,24 +30,25 @@ public class VhallUtil {
         return "当前直播处在" + statusStr + "状态！";
     }
 
-
     public static String getFixType(int type) {
         String typeStr = "";
         switch (type) {
-            case WatchRtmp.DEFAULT:
-                typeStr = "DEFAULT";
+            case WatchLive.FIT_DEFAULT:
+                typeStr = "FIT_DEFAULT";
                 break;
-            case WatchRtmp.CENTER_INSIDE:
-                typeStr = "CENTER_INSIDE";
+            case WatchLive.FIT_CENTER_INSIDE:
+                typeStr = "FIT_CENTER_INSIDE";
                 break;
-            case WatchRtmp.FIT_X:
+            case WatchLive.FIT_X:
                 typeStr = "FIT_X";
                 break;
-            case WatchRtmp.FIT_Y:
+            case WatchLive.FIT_Y:
                 typeStr = "FIT_Y";
                 break;
-            case WatchRtmp.FIT_XY:
+            case WatchLive.FIT_XY:
                 typeStr = "FIT_XY";
+                break;
+            default:
                 break;
         }
         return typeStr;
@@ -77,6 +78,4 @@ public class VhallUtil {
             return "00:" + strMinute + ":" + strSecond;
         }
     }
-
-
 }

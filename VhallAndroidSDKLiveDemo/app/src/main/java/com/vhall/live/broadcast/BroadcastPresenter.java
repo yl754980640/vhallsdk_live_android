@@ -7,16 +7,16 @@ import com.vhall.business.Broadcast;
 import com.vhall.business.VhallSDK;
 import com.vhall.live.data.Param;
 
-
+/**
+ * 发直播的Presenter
+ */
 public class BroadcastPresenter implements BroadcastContract.Presenter {
-
     private static final String TAG = "BroadcastPresenter";
 
     private Param param;
     private BroadcastContract.View mView;
     private Broadcast broadcast;
     private boolean ispublishing = false;
-
 
     public BroadcastPresenter(Param params, BroadcastContract.View mView) {
         this.param = params;
@@ -26,48 +26,62 @@ public class BroadcastPresenter implements BroadcastContract.Presenter {
 
     @Override
     public void start() {
-        mView.getCameraView().init(param.pixel_type, mView.getmActivity(), new RelativeLayout.LayoutParams(0, 0));
+        mView.getCameraView().init(param.pixel_type, mView.getmActivity(),
+                new RelativeLayout.LayoutParams(0, 0));
         getBroadcast().setAudioing(true);
-        VhallSDK.getInstance().setLogEnable(true);
+        VhallSDK.getInstance().setLogEnable(false);
     }
 
 
     @Override
     public void onstartBtnClick() {
         if (ispublishing) {
-            stopBroadcast();
+            finishBroadcast();
         } else {
-            startBroadCast();
+            if (getBroadcast().isAvaliable()) {
+                startBroadcast();
+            } else {
+                initBroadcast();
+            }
         }
     }
 
     @Override
-    public void startBroadCast() {
-        VhallSDK.getInstance().startBroadcast(param.id, param.token, getBroadcast(), new VhallSDK.BroadcastCallback() {
+    public void initBroadcast() {
+        VhallSDK.getInstance().initBroadcast(param.id, param.token, getBroadcast(), new VhallSDK.InitBroadcastCallback() {
             @Override
-            public void getStreaminfoSuccess() {
-                Log.e(TAG, "getStreaminfoSuccess");
+            public void initBroadcastSuccess() {
+                startBroadcast();
             }
 
             @Override
-            public void getStreaminfoFailed(String reason) {
-                Log.e(TAG, "getStreaminfoFailed：" + reason);
-                mView.showErrorMsg("getStreaminfoFailed：" + reason);
+            public void initBroadcastFailed(String reason) {
+                mView.showErrorMsg("initBroadcastFailed：" + reason);
             }
         });
     }
 
     @Override
-    public void stopBroadcast() {
-        VhallSDK.getInstance().stopBroadcast(param.id, param.token, getBroadcast(), new VhallSDK.StopBroadcastCallback() {
+    public void startBroadcast() {//发起直播
+        getBroadcast().start();
+    }
+
+    @Override
+    public void stopBroadcast() {//停止直播
+        getBroadcast().stop();
+    }
+
+    @Override
+    public void finishBroadcast() {
+        VhallSDK.getInstance().finishBroadcast(param.id, param.token, getBroadcast(), new VhallSDK.FinishBroadcastCallback() {
             @Override
-            public void stopSuccess() {
-                Log.e(TAG, "stopSuccess");
+            public void finishSuccess() {
+                Log.e(TAG, "finishSuccess");
             }
 
             @Override
-            public void stopFailed(String reason) {
-                Log.e(TAG, "stopFailed：" + reason);
+            public void finishFailed(String reason) {
+                Log.e(TAG, "finishFailed：" + reason);
             }
         });
     }
@@ -90,12 +104,15 @@ public class BroadcastPresenter implements BroadcastContract.Presenter {
 
     @Override
     public void onPause() {
-        getBroadcast().pause();
+        if (ispublishing)
+            stopBroadcast();
     }
 
     @Override
     public void onResume() {
-        getBroadcast().resume();
+        //异常中断（HOME/PHONE）返回，是否自动继续直播
+//        if (!ispublishing && getBroadcast().isAvaliable())
+//            getBroadcast().start();
     }
 
     private Broadcast getBroadcast() {

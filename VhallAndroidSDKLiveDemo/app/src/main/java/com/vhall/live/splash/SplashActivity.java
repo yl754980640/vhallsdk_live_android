@@ -9,8 +9,10 @@ import android.os.Message;
 import com.vhall.live.R;
 import com.vhall.live.main.MainActivity;
 
+/**
+ * 程序启动页的Activity
+ */
 public class SplashActivity extends Activity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

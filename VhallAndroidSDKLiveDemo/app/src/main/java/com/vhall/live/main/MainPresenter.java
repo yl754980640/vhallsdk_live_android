@@ -1,15 +1,14 @@
 package com.vhall.live.main;
 
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.vhall.live.data.Param;
 
 
-
+/**
+ * 主界面的Presenter
+ */
 public class MainPresenter implements MainContract.Presenter {
-
     private MainContract.View mView;
 
     public MainPresenter(MainContract.View view) {
@@ -48,25 +47,20 @@ public class MainPresenter implements MainContract.Presenter {
     public void startBroadcast(int ori) {
         if (!checkInput(true))
             return;
-        mView.skipStart(getParam(ori));
+        mView.skipBroadcast(getParam(ori));
     }
 
     @Override
-    public void startWatch() {
-        if(!checkInput(false))
+    public void startWatch(int watch_type) {
+        if (!checkInput(false))
             return;
-        mView.skipWatch(getParam(0));
+        Param param = getParam(0);
+        param.watch_type = watch_type;
+        mView.skipWatch(param);
     }
 
-    @Override
-    public void watchPlayback() {
-        if(!checkInput(false))
-            return;
-        mView.skipPlayback(getParam(0));
-    }
-
-    private Param getParam(int ori){
-       Param params = new Param();
+    private Param getParam(int ori) {
+        Param params = new Param();
         params.id = mView.getID();
         params.token = mView.getToken();
         params.videoBitrate = mView.getvideoBitrate();

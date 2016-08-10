@@ -1,4 +1,4 @@
-package com.vhall.live.watchrtmp;
+package com.vhall.live.watch;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +11,14 @@ import com.bumptech.glide.Glide;
 import com.vhall.live.R;
 
 /**
- * 文档
+ * 文档页的Fragment
  */
-public class WatchDocumentFragment extends Fragment implements RtmpWatchContract.DocumentView {
+public class DocumentFragment extends Fragment implements WatchContract.DocumentView {
     private ImageView iv_doc;
-    private RtmpWatchContract.Presenter mPresenter;
+    private String url = "";
 
-    public static WatchDocumentFragment newInstance() {
-        WatchDocumentFragment articleFragment = new WatchDocumentFragment();
+    public static DocumentFragment newInstance() {
+        DocumentFragment articleFragment = new DocumentFragment();
         return articleFragment;
     }
 
@@ -40,12 +40,14 @@ public class WatchDocumentFragment extends Fragment implements RtmpWatchContract
     }
 
     @Override
-    public void showDoc(final String docUrl) {
-        Glide.with(WatchDocumentFragment.this).load(docUrl).asBitmap().into(iv_doc);
+    public void showDoc(String docUrl) {
+        if (!url.equals(docUrl))
+            Glide.with(this).load(docUrl).into(iv_doc);
     }
 
+
     @Override
-    public void setPresenter(RtmpWatchContract.Presenter presenter) {
+    public void setPresenter(WatchContract.Presenter presenter) {
 
     }
 }
